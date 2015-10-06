@@ -99,6 +99,15 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+  	var unique = [];
+  	var seen = [];
+  	_.each(array, function(element) {
+  		if(_.indexOf(array, element) === -1) {
+  			unique.push(element);
+  		}
+  		seen.push(element);
+  	});
+  	return unique; 
   };
 
 
@@ -153,6 +162,14 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
+  	_.each(collection, function(element) {
+  		if(accumulator !== undefined) {
+  			accumulator = iterator(accumulator, element);
+  		} else {
+  			accumulator = element;
+  		};
+  	});
+  	return accumulator; 
   };
 
   // Determine if the array or object contains a given value (using `===`).

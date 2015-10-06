@@ -95,6 +95,10 @@
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it;
+    var results = _.filter(collection, function(element) {
+    	return test(element) === false;
+    });
+    return results;
   };
 
   // Produce a duplicate-free version of the array.

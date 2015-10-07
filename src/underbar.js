@@ -103,17 +103,15 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
-  	var seen = {};
+  	var charactersSeen = [];
+  	var unique = [];
   	_.each(array, function(element) {
-  		if(element in seen) {
-  			seen[element] += 1;
-  		} else {
-  			seen[element] = 1;
-  		}
+  		if(_.indexOf(charactersSeen, element) === -1) {
+  			unique.push(element);
+  		};
+  		charactersSeen.push(element);
   	});
-  	return _.reject(seen, function(element) {
-  		return seen[element] > 1; 
-  	});
+  	return unique; 
   };
 
 

@@ -38,12 +38,13 @@
   // Like first, but for the last elements. If n is undefined, return just the
   // last element.
   _.last = function(array, n) {
-  	var final = (array.length) - 1;
-  	var count = array.length; 
-	if(n === undefined) {return array[final];}
-	else if (n === 0) {return [];}
-	else if (n > count) {return array;} 
-	else {return array.slice((array.length)-n, count);}
+  	if(n === undefined) {
+        return array[(array.length) -1]
+    } else if(n > array.length) {
+        return array;
+    } else {
+        return array.slice((array.length) -n,array.length)
+    };
   };
 
   // Call iterator(value, key, collection) for each element of collection.

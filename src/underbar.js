@@ -205,9 +205,14 @@
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
-    // TIP: There's a very clever way to re-use every() here.
-    return _.every(collection, iterator);
-    
+    return _.reduce(collection, function(status, element) {
+    	if(status === true) {
+    		return Boolean(status);
+    	} else if (iterator === undefined) {
+    		return Boolean(element);
+    	}; 
+    	return Boolean(iterator(element));
+    }, false);
   };
 
 
@@ -241,15 +246,14 @@
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
-  	var baseObj = arguments[0];
-  	_.each(arguments, function(object) {
-  		_.each(object, function(val, key, obj) {
-  			if(key in baseObj === false) {
-  				baseObj[key] = object[key];
+  	return _.reduce(arguments, function(base,curr) {
+  		_.each(curr, function(val, key) {
+  			if(key in base === false) {
+  				base[key] = val;
   			};
   		});
-  	});
-  	return baseObj;
+  		return base;
+  	}, arguments[0]);
   };
 
 
@@ -293,6 +297,17 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+  	var used = {}; 
+  	var result; 
+  	return function(n) {
+  		if(n in used) {
+  			return result;
+  		} else {
+  			result = func.apply(this, arguments);
+  		};
+  		used[n] = result; 
+  		return result;
+  	};
   };
 
   // Delays a function for the given number of milliseconds, and then calls
@@ -302,6 +317,7 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+  	
   };
 
 
